@@ -2,10 +2,11 @@ import requests
 import time
 import json
 from datetime import datetime
+import os
 
 GROUP_ID = 976
 ACHIEVEMENTS_URL = f"https://api.wiseoldman.net/v2/groups/{GROUP_ID}/achievements"
-DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1387904458419208232/_5gWapOd18twuSJoOcnf5UhAhRTQm5fuAMDy33G4dgUylkrhNrSSFF21LQ-jO5PvM464"
+DISCORD_WEBHOOK_URL = os.environ["DISCORD_WEBHOOK_URL"]
 LAST_SEEN_FILE = "last_achievement.json"
 
 print("Waiting 5 minutes to let WOM update.")
