@@ -27,4 +27,6 @@ jobs:
           WOM_VERIFICATION_CODE: ${{ secrets.WOM_VERIFICATION_CODE }}
 
       - name: Check new achievements and post to Discord
-        run: python wom_check_achievements.py
+  run: python wom_check_achievements.py
+  env:
+    DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
