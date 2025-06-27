@@ -53,6 +53,6 @@ def main():
         send_to_discord(new_achievements)
         save_last_seen(new_achievements[-1]["createdAt"])
     else:
-        print("✅ No new achievements found.")
+        print("No new achievements found.")
 
 main()
