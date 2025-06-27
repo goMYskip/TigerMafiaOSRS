@@ -29,7 +29,7 @@ def save_last_seen(ts):
 
 def send_to_discord(achievements):
     for ach in achievements:
-        player = ach["playerName"]
+        player = ach["player"]["displayName"]
         metric = ach["metric"]
         type_ = ach["type"]
         date = ach["createdAt"][:10]
