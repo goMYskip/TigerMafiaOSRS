@@ -6,27 +6,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  update:
+  update-and-report:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: 3.11
 
       - name: Install dependencies
         run: pip install requests
 
-      - name: Update WOM group
+      - name: Update Wise Old Man Clan
         run: python wom_clan_update.py
         env:
           WOM_VERIFICATION_CODE: ${{ secrets.WOM_VERIFICATION_CODE }}
 
-      - name: Check new achievements and post to Discord
-  run: python wom_check_achievements.py
-  env:
-    DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      - name: Check and Post Achievements
+        run: python wom_check_achievements.py
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
