@@ -33,7 +33,7 @@ def send_to_discord(achievements):
         metric = ach["metric"]
         type_ = ach["type"]
         date = ach["createdAt"][:10]
-        msg = f"🏅 **{player}** achieved **{type_.capitalize()} {metric.capitalize()}** on {date}!"
+        msg = f"**{player}** achieved **{type_.capitalize()} {metric.capitalize()}**!"
         print(f"Sending: {msg}")
         requests.post(DISCORD_WEBHOOK_URL, json={"content": msg})
 
