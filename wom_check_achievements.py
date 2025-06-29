@@ -11,7 +11,7 @@ CLUES = {'clue_scroll_all': 'All', 'clue_scroll_beginner': 'Beginner', 'clue_scr
 ACTIVITIES = ['last-man-standing', 'pvp-arena', 'soul-wars-zeal', 'guardian-defence', 'rifts-closed']
 
 def format_achievement(ach):
-    player = ach["player"]["displayName"]
+    player = f"**{ach['player']['displayName']}**"
     metric = ach.get("metric", "")
     atype = ach.get("type", "").lower()
 
@@ -42,10 +42,17 @@ def format_achievement(ach):
     return f"{player} has achieved {atype} {metric_clean}!"
 
 def send_to_discord(achievements):
-    for ach in achievements:
-        msg = format_achievement(ach)
-        print("Sending:", msg)
-        requests.post(DISCORD_WEBHOOK_URL, json={"content": f"{msg}"})
+    if not achievements:
+        return
+
+    lines = [f"{format_achievement(a)}" for a in achievements]
+    summary = "\n".join(lines)
+
+    print("Sending batch message to Discord:")
+    print(summary)
+
+    requests.post(DISCORD_WEBHOOK_URL, json={"content": summary})
+
 
 def load_last_seen():
     try:
