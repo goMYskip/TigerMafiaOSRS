@@ -2,6 +2,7 @@ import os
 import json
 import time
 import requests
+from headline_helper import get_daily_header
 
 DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 
@@ -45,13 +46,15 @@ def send_to_discord(achievements):
     if not achievements:
         return
 
+    header = get_daily_header()
     lines = [f"{format_achievement(a)}" for a in achievements]
-    summary = "\n".join(lines)
+    summary = "\n".join([header] + lines)
 
     print("Sending batch message to Discord:")
     print(summary)
 
     requests.post(DISCORD_WEBHOOK_URL, json={"content": summary})
+
 
 
 def load_last_seen():
