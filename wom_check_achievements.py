@@ -18,33 +18,34 @@ def format_achievement(ach):
     player = f"**{ach['player']['displayName']}**"
     metric = ach.get("metric", "")
     atype = ach.get("type", "").lower()
+    value = str(ach.get("value", ""))
 
     metric_clean = metric.replace("_", " ").replace("-", " ").title()
 
-    if metric in SKILLS and atype.isdigit():
-        return f"{player} has achieved level {atype} {metric.title()}!"
+    if metric in SKILLS and atype == "level":
+        return f"{player} has achieved level {value} {metric.title()}!"
 
-    if metric in SKILLS and atype.endswith("m"):
-        return f"{player} has achieved {atype} {metric.title()} experience!"
+    if metric in SKILLS and atype == "experience":
+        return f"{player} has achieved {value} {metric.title()} experience!"
 
     if metric == "overall":
-        return f"{player} has achieved {atype} total XP!"
+        return f"{player} has achieved {value} total XP!"
 
     if metric in CLUES:
         clue_type = CLUES[metric]
-        return f"{player} has achieved {atype} {clue_type} clue completions!"
+        return f"{player} has achieved {value} {clue_type} clue completions!"
 
     if metric in BOSSES:
-        return f"{player} has achieved {atype} {metric_clean} kills!"
+        return f"{player} has achieved {value} {metric_clean} kills!"
 
     if metric in {'base_stats', 'combat_level'}:
-        return f"{player} has achieved base {atype} stats!"
+        return f"{player} has achieved base {value} stats!"
 
     if metric in ACTIVITIES:
-        return f"{player} has achieved {atype} {metric_clean}!"
+        return f"{player} has achieved {value} {metric_clean}!"
 
-    #Default fallback if metric is unknown
-    return f"{player} has achieved {atype} {metric_clean}!"
+    #Default fallback
+    return f"{player} has achieved {value} {metric_clean}!"
 
 #Sends a batch of achievements to the set Discord webhook.
 def send_to_discord(achievements):
