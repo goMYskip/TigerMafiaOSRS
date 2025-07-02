@@ -21,6 +21,14 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
+      - name: Cache achievement progress
+        uses: actions/cache@v4
+        with:
+          path: last_achievement.json
+          key: achievement-progress-${{ runner.os }}
+          restore-keys: |
+            achievement-progress-
+
       - name: Update Wise Old Man Clan
         run: python wom_clan_update.py
         env:
