@@ -18,15 +18,19 @@ def format_achievement(ach):
     player = f"**{ach['player']['displayName']}**"
     metric = ach.get("metric", "")
     atype = ach.get("type", "").lower()
-    value = str(ach.get("value", ""))
-
+    name = ach.get("name", "")
     metric_clean = metric.replace("_", " ").replace("-", " ").title()
 
+    try:
+        value = name.replace(metric_clean, "").strip()
+    except Exception:
+        value = ""
+
     if metric in SKILLS and atype == "level":
-        return f"{player} has achieved level {value} {metric.title()}!"
+        return f"{player} has achieved level {value} {metric_clean}!"
 
     if metric in SKILLS and atype == "experience":
-        return f"{player} has achieved {value} {metric.title()} experience!"
+        return f"{player} has achieved {value} {metric_clean} experience!"
 
     if metric == "overall":
         return f"{player} has achieved {value} total XP!"
@@ -44,7 +48,6 @@ def format_achievement(ach):
     if metric in ACTIVITIES:
         return f"{player} has achieved {value} {metric_clean}!"
 
-    #Default fallback
     return f"{player} has achieved {value} {metric_clean}!"
 
 #Sends a batch of achievements to the set Discord webhook.
