@@ -21,6 +21,9 @@ def format_achievement(ach):
     name = ach.get("name", "")
     metric_clean = metric.replace("_", " ").replace("-", " ").title()
 
+    if name.lower() == "maxed overall":
+        return f"{player} has maxed their account (2277 total level)!"
+
     try:
         value = name.replace(metric_clean, "").strip()
     except Exception:
@@ -48,6 +51,7 @@ def format_achievement(ach):
     if metric in ACTIVITIES:
         return f"{player} has achieved {value} {metric_clean}!"
 
+    #Fallback for unknown types
     return f"{player} has achieved {value} {metric_clean}!"
 
 #Sends a batch of achievements to the set Discord webhook.
